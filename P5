@@ -1,0 +1,90 @@
+#1
+class Printer:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def print_document(self, document):
+        print("Printing:", document)
+
+
+p1 = Printer()
+p2 = Printer()
+
+p1.print_document("Document 1")
+p2.print_document("Document 2")
+
+print("Same object:", p1 is p2)
+
+#2
+class Apple:
+    def display(self):
+        print("Fruit: Apple")
+
+
+class Mango:
+    def display(self):
+        print("Fruit: Mango")
+
+
+class Orange:
+    def display(self):
+        print("Fruit: Orange")
+
+
+class FruitFactory:
+    @staticmethod
+    def create_fruit(name):
+        if name == "apple":
+            return Apple()
+        elif name == "mango":
+            return Mango()
+        elif name == "orange":
+            return Orange()
+        else:
+            return None
+
+
+fruit = FruitFactory.create_fruit(input("Enter fruit: ").lower())
+
+if fruit:
+    fruit.display()
+else:
+    print("Invalid fruit")
+
+
+#3
+class WeatherStation:
+    def __init__(self):
+        self.displays = []
+
+    def register(self, display):
+        self.displays.append(display)
+
+    def set_temperature(self, temperature):
+        print("\nTemperature changed to", temperature, "°C")
+        for display in self.displays:
+            display.update(temperature)
+
+
+class Display:
+    def __init__(self, name):
+        self.name = name
+
+    def update(self, temperature):
+        print(self.name, "display:", temperature, "°C")
+
+
+station = WeatherStation()
+
+d1 = Display("Display 1")
+d2 = Display("Display 2")
+
+station.register(d1)
+station.register(d2)
+
+station.set_temperature(30)
+station.set_temperature(35)
