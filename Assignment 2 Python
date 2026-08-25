@@ -1,0 +1,130 @@
+
+def uppercase(func):
+    def wrapper(self, text):
+        return func(self, text).upper()
+    return wrapper
+
+
+def add_border(func):
+    def wrapper(self, text):
+        result = func(self, text)
+        border = "*" * 50
+        return f"{border}\n{result}\n{border}"
+    return wrapper
+
+class Report:
+    def __init__(self, title, data):
+        self.title = title
+        self.data = data
+
+    def __str__(self):
+        return f"Report: {self.title}"
+
+    def __len__(self):
+        return len(self.data)
+
+    @classmethod
+    def from_dict(cls, report_dict):
+        title = report_dict.get("title", "Untitled Report")
+        data = report_dict.get("data", [])
+        return cls(title, data)
+
+    def generate(self):
+        report = f"\n{self.title}\n"
+        report += "-" * len(self.title) + "\n"
+
+        for item in self.data:
+            report += f"{item}\n"
+
+        return report
+
+    @uppercase
+    def uppercase_report(self, text):
+        return text
+
+    @add_border
+    def bordered_report(self, text):
+        return text
+
+
+class ReportTemplate:
+    def __init__(self, name):
+        self.name = name
+        self.options = []
+
+    def add_option(self, option):
+        self.options.append(option)
+
+    def format_report(self, report):
+        result = report
+
+        for option in self.options:
+
+            if option == "uppercase":
+                result = result.upper()
+
+            elif option == "border":
+                border = "=" * 50
+                result = f"{border}\n{result}\n{border}"
+
+            elif option == "center":
+                result = "\n".join(line.center(50)
+                                   for line in result.split("\n"))
+
+        return result
+
+    # Magic method
+    def __str__(self):
+        return f"Template: {self.name}"
+
+
+
+
+
+data = [
+    "Name: Avani",
+    "Course: B.Tech Computer Science",
+    "Semester: 2",
+    "Marks: 85"
+]
+
+
+report = Report("Student Academic Report", data)
+
+print("Original Report:")
+print(report.generate())
+
+print("Report Object:")
+print(report)
+
+print("\nNumber of data items:", len(report))
+
+
+template = ReportTemplate("Student Report Template")
+
+template.add_option("border")
+template.add_option("uppercase")
+template.add_option("center")
+
+original_report = report.generate()
+
+formatted_report = template.format_report(original_report)
+
+print("\nFormatted Report:")
+print(formatted_report)
+
+
+report_data = {
+    "title": "Employee Report",
+    "data": [
+        "Name: Rahul",
+        "Department: IT",
+        "Experience: 2 Years",
+        "Performance: Excellent"
+    ]
+}
+
+employee_report = Report.from_dict(report_data)
+
+print("\nEmployee Report:")
+print(employee_report.generate())
