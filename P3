@@ -1,0 +1,16 @@
+from datetime import datetime
+
+def logger(func):
+    def wrapper():
+        print("Function:", func.__name__)
+        print("Called at:", datetime.now())
+        func()
+    return wrapper
+
+
+@logger
+def greet():
+    print("Hello, welcome!")
+
+
+greet()
