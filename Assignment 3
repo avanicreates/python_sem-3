@@ -1,0 +1,63 @@
+class PaymentStrategy:
+    def pay(self, amount):
+        pass
+
+class CreditCardPayment(PaymentStrategy):
+
+    def pay(self, amount):
+        print(f"Processing Credit Card payment of ₹{amount}")
+        print("Payment successful using Credit Card.")
+
+class UPIPayment(PaymentStrategy):
+
+    def pay(self, amount):
+        print(f"Processing UPI payment of ₹{amount}")
+        print("Payment successful using UPI.")
+
+class PayPalPayment(PaymentStrategy):
+
+    def pay(self, amount):
+        print(f"Processing PayPal payment of ₹{amount}")
+        print("Payment successful using PayPal.")
+
+
+class PaymentProcessor:
+
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def set_strategy(self, strategy):
+        self.strategy = strategy
+
+    def process_payment(self, amount):
+        self.strategy.pay(amount)
+
+
+print(" PAYMENT PROCESSING SYSTEM ")
+
+amount = float(input("Enter payment amount: ₹"))
+
+print("\nChoose Payment Method:")
+print("1. Credit Card")
+print("2. UPI")
+print("3. PayPal")
+
+choice = input("Enter your choice: ")
+
+if choice == "1":
+    strategy = CreditCardPayment()
+
+elif choice == "2":
+    strategy = UPIPayment()
+
+elif choice == "3":
+    strategy = PayPalPayment()
+
+else:
+    print("Invalid payment method.")
+    exit()
+
+processor = PaymentProcessor(strategy)
+
+print()
+processor.process_payment(amount)
