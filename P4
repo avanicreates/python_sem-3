@@ -1,0 +1,17 @@
+def validate(func):
+    def wrapper(*args):
+        if all(isinstance(x, int) and x > 0 for x in args):
+            func(*args)
+        else:
+            print("Error: All arguments must be positive integers.")
+    return wrapper
+
+
+@validate
+def add(a, b):
+    print("Sum:", a + b)
+
+
+add(10, 20)
+add(10, -5)
+add(10, 2.5)
