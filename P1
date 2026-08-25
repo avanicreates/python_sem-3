@@ -1,0 +1,20 @@
+def add(a, b):
+    print("Sum:", a + b)
+
+def student(name, age):
+    print("Name:", name)
+    print("Age:", age)
+
+def greet(name, message="Welcome"):
+    print(message, name)
+
+def total(*numbers):
+    print("Total:", sum(numbers))
+
+add(10, 20)
+
+student(age=19, name="Avani")
+
+greet("Avani")
+
+total(10, 20, 30, 40)
