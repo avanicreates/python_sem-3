@@ -1,0 +1,18 @@
+def fib_memo(n, memo={}):
+    if n <= 1:
+        return n
+    if n not in memo:
+        memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+
+def fib_tab(n):
+    dp = [0, 1]
+    for i in range(2, n + 1):
+        dp.append(dp[i-1] + dp[i-2])
+    return dp[n]
+
+
+n = int(input("Enter n: "))
+
+print("Using Memoization:", fib_memo(n))
+print("Using Tabulation:", fib_tab(n))
