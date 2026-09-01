@@ -1,0 +1,13 @@
+File1=open(r"C:\Users\AVANI GUPTA\Documents\APP1.txt","r")
+lines=File1.readlines()
+File1.close()
+
+print("Total Number of lines in file APP1.txt:",len(lines))
+first_two_lines=lines[0 : 2]
+print("\nFirst two lines of file:\n")
+for i in first_two_lines:
+    print(i)
+File2=open("Output.txt","w")
+File2.writelines(first_two_lines)
+print("\n First two lines of APP1.txt file are written to Output.txt")
+File2.close()
