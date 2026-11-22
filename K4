@@ -1,0 +1,124 @@
+
+import json
+import os
+
+FILE = "drivers.json"
+
+def load_drivers():
+    if os.path.exists(FILE):
+        with open(FILE, "r") as f:
+            return json.load(f)
+    return []
+
+def save_drivers(drivers):
+    with open(FILE, "w") as f:
+        json.dump(drivers, f, indent=4)
+
+def add_driver():
+    drivers = load_drivers()
+
+    driver = {
+        "Driver ID": input("Enter Driver ID: "),
+        "Name": input("Enter Driver Name: "),
+        "Mobile": input("Enter Mobile Number: "),
+        "Cab Number": input("Enter Cab Number: "),
+        "Cab Type": input("Enter Cab Type: "),
+        "Experience": int(input("Enter Experience: ")),
+        "Rating": float(input("Enter Rating: ")),
+        "Availability": input("Enter Availability (Yes/No): ")
+    }
+
+    drivers.append(driver)
+    save_drivers(drivers)
+    print("Driver added successfully!")
+
+def display_drivers():
+    drivers = load_drivers()
+
+    for driver in drivers:
+        print(driver)
+
+def search_driver():
+    drivers = load_drivers()
+    did = input("Enter Driver ID: ")
+
+    for driver in drivers:
+        if driver["Driver ID"] == did:
+            print(driver)
+            return
+
+    print("Driver not found!")
+
+def update_availability():
+    drivers = load_drivers()
+    did = input("Enter Driver ID: ")
+
+    for driver in drivers:
+        if driver["Driver ID"] == did:
+            driver["Availability"] = input("Enter new availability (Yes/No): ")
+            save_drivers(drivers)
+            print("Availability updated!")
+            return
+
+    print("Driver not found!")
+
+def search_rating():
+    drivers = load_drivers()
+    rating = float(input("Enter minimum rating: "))
+
+    for driver in drivers:
+        if driver["Rating"] > rating:
+            print(driver)
+
+def delete_driver():
+    drivers = load_drivers()
+    did = input("Enter Driver ID: ")
+
+    for driver in drivers:
+        if driver["Driver ID"] == did:
+            drivers.remove(driver)
+            save_drivers(drivers)
+            print("Driver deleted successfully!")
+            return
+
+    print("Driver not found!")
+
+def available_drivers():
+    drivers = load_drivers()
+
+    for driver in drivers:
+        if driver["Availability"].lower() == "yes":
+            print(driver)
+
+while True:
+    print("\n===== CAB DRIVER MANAGEMENT SYSTEM =====")
+    print("1. Add Driver")
+    print("2. Display All Drivers")
+    print("3. Search Driver by ID")
+    print("4. Update Driver Availability")
+    print("5. Search Drivers by Rating")
+    print("6. Delete Driver")
+    print("7. Display Available Drivers")
+    print("8. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        add_driver()
+    elif choice == "2":
+        display_drivers()
+    elif choice == "3":
+        search_driver()
+    elif choice == "4":
+        update_availability()
+    elif choice == "5":
+        search_rating()
+    elif choice == "6":
+        delete_driver()
+    elif choice == "7":
+        available_drivers()
+    elif choice == "8":
+        print("Exiting program...")
+        break
+    else:
+        print("Invalid choice!")
