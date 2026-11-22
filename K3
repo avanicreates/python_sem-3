@@ -1,0 +1,21 @@
+
+import csv
+
+with open("employee.csv", "r") as file:
+    reader = csv.DictReader(file)
+
+    print("Employee Details:")
+    print("-----------------------------")
+
+    for row in reader:
+        name = row["Name"]
+        salary = int(row["Monthly Salary"])
+
+        annual_salary = salary * 12
+
+        print("\nName:", name)
+        print("Monthly Salary:", salary)
+        print("Annual Salary:", annual_salary)
+
+        if salary > 50000:
+            print("Employee earns above Rs. 50,000 per month.")
