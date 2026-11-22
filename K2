@@ -1,0 +1,53 @@
+
+import csv
+import json
+
+n = int(input("Enter number of students: "))
+
+with open("students.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Roll Number", "Name", "Branch", "Marks1", "Marks2", "Marks3"])
+
+    for i in range(n):
+        print("\nEnter details of student", i + 1)
+        roll = input("Roll Number: ")
+        name = input("Name: ")
+        branch = input("Branch: ")
+        m1 = int(input("Marks in Subject 1: "))
+        m2 = int(input("Marks in Subject 2: "))
+        m3 = int(input("Marks in Subject 3: "))
+
+        writer.writerow([roll, name, branch, m1, m2, m3])
+
+
+students = []
+
+with open("students.csv", "r") as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        total = int(row["Marks1"]) + int(row["Marks2"]) + int(row["Marks3"])
+        percentage = total / 3
+
+        if percentage >= 90:
+            grade = "A"
+        elif percentage >= 75:
+            grade = "B"
+        elif percentage >= 60:
+            grade = "C"
+        elif percentage >= 40:
+            grade = "D"
+        else:
+            grade = "F"
+
+        row["Total"] = total
+        row["Percentage"] = round(percentage, 2)
+        row["Grade"] = grade
+
+        students.append(row)
+
+with open("students.json", "w") as file:
+    json.dump(students, file, indent=4)
+
+print("\nStudent records processed successfully!")
+print("Data saved in students.csv and students.json")
